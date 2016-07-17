@@ -1,6 +1,8 @@
 # dojo-webpack-loader-doc
 Commentary on dojo-webpack-loader's example webpack.config.js
 
+The purpose of this project is to teach myself (and others, possibly) the necessary basics of WebPack use with Dojo 1.
+
 <pre>
 var webpack = require("webpack");
 var path = require("path");
