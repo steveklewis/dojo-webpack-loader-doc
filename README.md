@@ -29,12 +29,28 @@ var entry = {};
 entry_list.forEach(function(e) { entry[e] = path.resolve(__dirname, "./src/" + e) });
 
 module.exports = {
+    /**
+     * Support for multiple entry points, which means creating multiple bundles for multiple HTML pages.
+     * https://webpack.github.io/docs/multiple-entry-points.html
+     */
     entry: entry,
+
+    /**
+     * resolveLoader is like resolve but for loaders. What's the difference between
+     * resolve and resolveLoader? resolve applies to modules, while resolveLoader
+     * applies to the resolve options for the loaders.
+     * 
+     */
     resolveLoader: {
         modulesDirectories: [
             path.resolve(__dirname, './node_modules/')
         ]
     },
+
+    /**
+     * resolve.alias allows us to use a different path for certain modules.
+     *
+     */
     resolve: {
         alias: {
             "dojo": path.resolve(__dirname, './dojo/dojo'),
@@ -43,7 +59,18 @@ module.exports = {
             "dgrid": path.resolve(__dirname, './dojo/dgrid')
         }
     },
+
+    /**
+     * Generate source maps. This is one of the slowest options and will
+     * affect webpack running time.
+     */
     devtool: 'source-map',
+
+    /**
+     * Tell webpack to load the dojo-webpack-loader.
+     * Run the loader against anything ending in .js.
+     * Check all the .js files in the ../dojo directory.
+     */
     module: {
         loaders: [
             {
@@ -53,12 +80,19 @@ module.exports = {
             },
         ]
     },
+
+    /**
+     * Output each bundle to the bundle/ subdirectory.
+     */
     output: {
         path: path.resolve(__dirname, 'bundle/'),
         publicPath: "bundle/",
         filename: "[name].bundle.js"
     },
 
+    /**
+     * Options that go directly into the dojo-webpack-loader module loader.
+     */
     dojoWebpackLoader: {
         // We should specify paths to core and dijit modules because we using both
         dojoCorePath: path.resolve(__dirname, './dojo/dojo'),
